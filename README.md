@@ -37,4 +37,8 @@ Given more time with the user interface I would probably add Yup Validation or a
 - *General Usability*
 
 While the requirements didn't mention it explicitly, a better feature would be to account support to associate a tiny url with a person. This could be for billing or validation of some sort. 
+- *Shortener Program*
+    Was researching different ways to accomplish this and settled on a method that doesn't involve hashing URL strings like I initially assumed I would. some of the terminology remained.
+
+ 
 
