@@ -13,10 +13,8 @@ use App\Http\Controllers\UrlController;
 |
 */
 
-Route::get('/', [UrlController::class, 'redirect']);
+Route::get('/{hashKey}', [UrlController::class, 'redirect']);
 
-Route::post('/url_hash', [UrlController::class, 'save']);
-
-Route::get('/url_hash/popular', [UrlController::class, 'getSorted']);
+Route::get('/app/manage', [UrlController::class, 'appPage']);
 
 // Route::post('/url_hash',);

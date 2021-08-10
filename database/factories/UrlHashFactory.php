@@ -23,7 +23,7 @@ class UrlHashFactory extends Factory
     public function definition()
     {
         return [
-            'hash_key' => $this->faker->unique()->string(),
+            'hash_key' => $this->faker->text(),
             'url' => $this->faker->unique()->url(),
             'times_accessed' => $this->faker->numberBetween(0, 10000),
         ];

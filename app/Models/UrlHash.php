@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class UrlHash extends Model 
 {
-    use Authenticatable, Authorizable, HasFactory;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,8 @@ class UrlHash extends Model
     protected $fillable = [
         'hash_key', 'url',
     ];
-
+    
+    
     /**
      * SCOPES
      */
@@ -45,7 +46,7 @@ class UrlHash extends Model
      */
 
      public function incrementTimesAccessed():void {
-         $this->timesAccessed++;
+         $this->times_accessed++;
      }
 
      public function saveHashKey():void {
@@ -68,21 +69,21 @@ class UrlHash extends Model
         $map = "abcdefghijklmnopqrstuvwxyzABCDEF
                 GHIJKLMNOPQRSTUVWXYZ0123456789";
         $map = str_split($map); //convert the string into an array of characters
-        $shorturl;
+        $shortUrl = '';
     
         // Convert given integer id to a base 62 number
         while ($n)
         {
             // use above map to store actual character
             // in short url
-            $shortUrl += $map[$n%62];
+            $shortUrl = $shortUrl . $map[$n%62];
             $n = floor($n/62);
         }
     
         // Reverse shortURL to complete base conversion
-        reverse(shorturl.begin(), shorturl.end());
+        $shortUrl = strrev($shortUrl);
     
-        return $shorturl;
+        return $shortUrl;
     }
 
     /**
@@ -97,8 +98,8 @@ class UrlHash extends Model
      * between inserting the initial object and a query
      * @param $options the general laravel save options
      */
-    public function save(array $options = []):void {
-        DB::transaction(function() {
+    public function save(array $options = []): void {
+        DB::transaction(function() use ($options) {
             parent::save($options);
             if (!$this->hash_key) {
                 $this->saveHashKey();

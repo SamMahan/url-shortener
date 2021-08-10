@@ -18,26 +18,37 @@ class UrlController extends Controller
     {
         //
     }
+
+    public function appPage(Request $request) {
+        return view('pages.app');
+    }
     /**
      * redirects our request to the desired site based on the given minified hash key
      * @param Request $request
      * @param string $hashKey the mini-url key
      * 
      */
-    public function redirect(Request $request, string $hashKey) {
+    public function redirect(Request $request, string $hashKey = '') {
+        
         $urlObj = UrlHash::hasHashKey($hashKey)->first();
-        if ($url){
+       
+        if ($urlObj) {
             $urlObj->incrementTimesAccessed();
+            $urlObj->save();
             return redirect()->away($urlObj->url);
+        } else {
+            return response(null, 404);
         }
     }
 
     public function save(UrlHashRequest $request) {
-        $valdiatedData = $request->validated();
-        $urlObj = new UrlHash();
-        $urlObj->url = $validatedData['url'];
-        $urlObj->save();
-        return response(null, 200);
+        $validatedData = $request->validated();
+        $urlObj = UrlHash::firstOrCreate(
+            ['url' => $validatedData['url']]
+        );
+        // $urlObj->url = $validatedData['url'];
+        // $urlObj->save();
+        return response(new UrlHashResource($urlObj), 200);
     }
 
     public function getSorted(Request $request) {

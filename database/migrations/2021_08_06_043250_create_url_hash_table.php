@@ -13,7 +13,7 @@ class CreateUrlHashTable extends Migration
      */
     public function up()
     {
-        Schema::create('url_hash', function (Blueprint $table) {
+        Schema::create('url_hashes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('hash_key')->index()->unique()->nullable();
@@ -29,6 +29,6 @@ class CreateUrlHashTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('url_hash');
+        Schema::dropIfExists('url_hashes');
     }
 }

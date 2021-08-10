@@ -14,6 +14,14 @@ class UrlHashResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->hash_key,
+            'url' => $this->url,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'hash_key' => $this->hash_key,
+            'short_url' => env('APP_URL') . "/{$this->hash_key}",
+            'times_accessed' => $this->times_accessed
+        ];
     }
 }
